@@ -1,0 +1,35 @@
+
+.form-login{
+    background: #ecf0f159;
+    color: #fff;
+    border-radius: 10px;
+    margin: auto; 
+    margin-top: 150px;
+    max-width: 300px;
+    width: 100%;  
+    padding: 20px;
+  }
+  
+  .log-input{
+      border-radius:10px;
+  }
+  
+  .btn-log{
+      background: rgb(241, 196, 15);
+      border: 0;
+      color: white;
+      border-radius: 15px;
+      max-width: 230px;
+  }
+  
+  .btn-log:hover{
+      background: #5272ff;
+      border: 0;
+  }
+  
+  .google-button{
+      background: #ffd61f;
+      color: black;
+      border-radius: 15px;
+      margin: 5px;
+  }
