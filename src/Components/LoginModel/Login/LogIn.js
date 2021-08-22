@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './LogIn.css'
 import firebase from "firebase/app";
@@ -16,7 +16,7 @@ if (firebase.apps.length === 0) {
 
 const LogIn = () => {
 
-  const {loggedInUser, setLoggedInUser}= useContext(UserContext);
+  const { setLoggedInUser}= useContext(UserContext);
      const history = useHistory();
      const location = useLocation();
      const { from } = location.state || { from: { pathname: "/" } };

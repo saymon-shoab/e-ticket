@@ -2,10 +2,9 @@ import React, { useContext } from 'react';
 import './Navber.css'
 import logo from './../../../image/ticket.png'
 import { Link } from 'react-router-dom';
-import user from './../../../image/tickets 3.png'
 import { UserContext } from '../../../App';
 const Navber = () => {
-  const {loggedInUser, setLoggedInUser} = useContext(UserContext)
+  const {loggedInUser} = useContext(UserContext)
     return (
         <div>
 <nav className="navbar  navbar-expand-lg navbar-dark bg-dark">
