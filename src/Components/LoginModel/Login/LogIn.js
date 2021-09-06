@@ -7,6 +7,9 @@ import firebaseConfig from './firebase.Config';
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { useHistory, useLocation } from 'react-router-dom';
 import { UserContext } from '../../../App';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
@@ -21,14 +24,7 @@ const LogIn = () => {
      const location = useLocation();
      const { from } = location.state || { from: { pathname: "/" } };
  
-    // const [modalIsOpen, setIsOpen] = useState(false);
-    // function openModal() {
-    //     setIsOpen(true);
-    //   }
-    //   function closeModal() {
-    //     setIsOpen(false);
-    //   }
- 
+  
 
     const [newUser, setNewUser]=useState(false)
     const [user, setUser] = useState({
@@ -44,9 +40,12 @@ const LogIn = () => {
 
 
     const handleSignIn = () => {
-        
+      // const loading = toast.loading('Please wait...');
         firebase.auth().signInWithPopup(provider)
         .then(res=>{
+          
+            toast("sign in successfully");
+        
             let {displayName,photoURL,email}=res.user
             const signedInUser ={
                 isSignedIn:true,
@@ -62,6 +61,8 @@ const LogIn = () => {
         })
         .catch(error=>{
             console.log(error.message)
+           
+            
         })
     }
 const handleSignOut =() => {
@@ -109,6 +110,7 @@ const handleSubmit = (event) => {
    if(newUser && user.email && user.password){
     firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
     .then((res) => {
+      updateUserName(user.name)
       const newUserInfo = {...user};
       newUserInfo.error = "";
       newUserInfo.success =true;
@@ -117,11 +119,12 @@ const handleSubmit = (event) => {
       // ...
     })
     .catch((error) => {
+      toast(error.message);
       const newUserInfo ={...user} 
       newUserInfo.error = error.message
       newUserInfo.success=false;
      setUser(newUserInfo)
-     updateUserName(user.name)
+     
       // ..
     });
    }
@@ -130,6 +133,7 @@ const handleSubmit = (event) => {
     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
     .then((res) => {
       // Signed in
+      toast("Wow so easy!");
       const newUserInfo = {...user};
       newUserInfo.error = "";
       newUserInfo.success =true;
@@ -141,6 +145,7 @@ const handleSubmit = (event) => {
       // ...
     })
     .catch((error) => {
+      toast(error.message);
       const newUserInfo ={...user} 
       newUserInfo.error = error.message
       newUserInfo.success=false;
@@ -159,7 +164,7 @@ const updateUserName = name =>{
   const user = firebase.auth().currentUser;
 
   user.updateProfile({
-    displayName: "Jane Q. User",
+    displayName: name,
   }).then(() => {
     // Update successful
     // ...
@@ -204,13 +209,15 @@ const storeAuthTocken = () => {
                Google Sign In </button>}
                <div  >
             
-                   <p style={{color:'red'}}>{user.error}</p>
+                   {/* <p style={{color:'red'}}>{user.error}</p> */}
               
           { user.success &&
              
-             <p style={{color:'green'}}>User {newUser ?"created" : "logged In"} successfully</p>
+             toast(<p style={{color:'green'}}>User {newUser ?"created" : "logged In"} successfully</p>)
           }
-
+         {/* {
+           user.success && toast("User {newUser ?"created" : "logged In"} successfully")
+         } */}
 
                </div>
                    
@@ -223,6 +230,7 @@ const storeAuthTocken = () => {
             </form>
            
         </div>
+        <ToastContainer />
         </div>
        
     );
